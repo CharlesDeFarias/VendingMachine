@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <section class="container">
+      <section class="vender">
+        <section class="items">
+          <h3>Items</h3>
+          <ul class="options">
+          <% for(var i=0; i<items.length; i++) {%>
+            <li class="specs">
+              <p><%= items[i].name %></p>
+              <p><%= items[i].price %></p>
+              <p><%= items[i].count %></p>
+              <img src="<%= items[i].pic %>" alt="item image">
+              <p><%= items[i].btnCode %></p>
+            </li>
+          <% } %>
+          </ul>
+        </section>
+        <section class="keypad" >
+          <button id="one" type="button" name="button"></button>
+          <button id="two" type="button" name="button"></button>
+          <button id="three" type="button" name="button"></button>
+          <button id="four" type="button" name="button"></button>
+          <button id="five" type="button" name="button"></button>
+        </section>
+        <section class="display" >
+          <img src="<%= items[i].pic %>" alt="item image">
+        </section>
+      </section>
+    </section>
+  </body>
+</html>
