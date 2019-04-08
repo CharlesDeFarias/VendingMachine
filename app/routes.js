@@ -1,19 +1,23 @@
 module.exports = function(app, passport, db) {
 
 // normal routes ===============================================================
-
-    // show the home page (will also have our login links)
+    // show the home page
     app.get('/', function(req, res) {
-        res.render('index.ejs');
-    });
+      db.collection('items').find().toArray((err, result) => {
+        if (err) return console.log(err)
+        res.render('index.ejs', {
+          items: result
+        })
+      })
+    })
 
-    // PROFILE SECTION =========================
-    app.get('/profile', isLoggedIn, function(req, res) {
+    // OWNER SECTION =========================
+    app.get('/owner', isLoggedIn, function(req, res) {
       db.collection('items').find().toArray((err, items) => {
         if (err) return console.log(err)
         db.collection('bank').find().toArray((err, bank) => {
           if (err) return console.log(err)
-          res.render('index.ejs', {items: items, bank: bank})
+          res.render('owner.ejs', {items: items, bank: bank})
         })
       })
     });
@@ -26,10 +30,10 @@ module.exports = function(app, passport, db) {
 
 // Items posting & putting===============================================================
     app.post('/items', (req, res) => {
-      db.collection('items').save({name: req.body.name, pic: req.body.pic, desc: req.body.desc, code: req.body.code, stock: 5, price:req.body.price}, (err, result) => {
+      db.collection('items').save({name: req.body.name, pic: req.body.pic, code: req.body.code, stock: req.body.stock, price:req.body.price}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
-        res.redirect('/profile')
+        res.redirect('/owner')
       })
     })
 
@@ -37,7 +41,7 @@ module.exports = function(app, passport, db) {
       db.collection('items').findOneAndUpdate({name: req.body.name, code: req.body.code}, {
         $set: {
           //have to make sure to add newStock to request in javascript that does put fetch request
-          stock:req.body.stock + req.body.newStock
+          stock:parseInt(req.body.stock, 10) + parseInt(req.body.newStock, 10)
         }
       }, {
         sort: {_id: -1},
@@ -48,12 +52,22 @@ module.exports = function(app, passport, db) {
       })
     })
 
-    app.delete('/items', (req, res) => {
-      db.collection('items').findOneAndDelete({name: req.body.name, code: req.body.code}, (err, result) => {
-        if (err) return res.send(500, err)
-        res.send('Message deleted!')
-      })
-    })
+    // app.delete('/items', (req, res) => {
+    //   db.collection('items').findOneAndDelete({name: req.body.name, code: req.body.code}, (err, result) => {
+    //     if (err) return res.send(500, err)
+    //     res.send('Message deleted!')
+    //   })
+    // })
+//Choosing specific item from items collection based on Code
+// app.get('/item', (req, res) => {
+//   db.collection('items').findOne({code: req.body.code}, (err, result) => {
+//     if (err) return console.log(err)
+//     res.render('index.ejs', {
+//     item: result
+//     })
+//   })
+//   console.log(req.body.code)
+// })
 
 // Bank updating
 app.put('/bank', (req, res) => {
@@ -83,19 +97,15 @@ app.put('/bank', (req, res) => {
         });
         // process the login form
         app.post('/login', passport.authenticate('local-login', {
-            successRedirect : '/profile', // redirect to the secure profile section
+            successRedirect : '/owner', // redirect to the secure profile section
             failureRedirect : '/login', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
         // SIGNUP =================================
-        // show the signup form
-        app.get('/signup', function(req, res) {
-            res.render('signup.ejs', { message: req.flash('signupMessage') });
-        });
         // process the signup form
         app.post('/signup', passport.authenticate('local-signup', {
-            successRedirect : '/profile', // redirect to the secure profile section
-            failureRedirect : '/signup', // redirect back to the signup page if there is an error
+            successRedirect : '/owner', // redirect to the secure profile section
+            failureRedirect : '/login', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
 
@@ -111,7 +121,7 @@ app.put('/bank', (req, res) => {
         user.local.email    = undefined;
         user.local.password = undefined;
         user.save(function(err) {
-            res.redirect('/profile');
+            res.redirect('/');
         });
     });
 };

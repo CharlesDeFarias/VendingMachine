@@ -7,32 +7,33 @@
   </head>
   <body>
     <section class="container">
-      <section class="vender">
-        <section class="items">
+      <section class="vendor">
+        <section class="indexItems">
           <h3>Items</h3>
           <ul class="options">
           <% for(var i=0; i<items.length; i++) {%>
             <li class="specs">
-              <p><%= items[i].name %></p>
-              <p><%= items[i].price %></p>
-              <p><%= items[i].count %></p>
+              <p><span>Name:</span><%= items[i].name %></p>
+              <p><span>Price:</span>$<%= items[i].price %></p>
               <img src="<%= items[i].pic %>" alt="item image">
-              <p><%= items[i].btnCode %></p>
+              <p><span>Stock:</span><%= items[i].stock %></p>
+              <p><span>Code:</span><%= items[i].code %></p>
             </li>
           <% } %>
           </ul>
         </section>
-        <section class="keypad" >
-          <button id="one" type="button" name="button"></button>
-          <button id="two" type="button" name="button"></button>
-          <button id="three" type="button" name="button"></button>
-          <button id="four" type="button" name="button"></button>
-          <button id="five" type="button" name="button"></button>
-        </section>
-        <section class="display" >
-          <img src="<%= items[i].pic %>" alt="item image">
-        </section>
+
+    <section class="keypad" >
+      <input id="vendNum" type="text" name="code" value="" placeholder="Code of Item you want">
+      <button id="clickMe" type="button" name="button">Submit Choice</button>
+    </section>
+
+      <section class="display" >
+        <img src="" alt="item image">
       </section>
     </section>
+
+  </section>
+  <script src="main.js" charset="utf-8"></script>
   </body>
 </html>

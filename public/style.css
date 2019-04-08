@@ -1,7 +1,77 @@
+*{
+  box-sizing: border-box;
+
+}
 body{
   padding-top:80px;
   word-wrap:break-word;
 }
+ul{
+  list-style: none;
+}
 img{
-  height: 200px;
+  height: 100px;
+  max-width: 100%;
+}
+section{
+  float: left;
+}
+.container{
+  width: 80%;
+  border: 2px solid black;
+  margin-left: 10%;
+}
+.vendor{
+  width: 60%;
+  height: 800px;
+  border: 2px solid black;
+  margin-left: 20%;
+}
+.indexItems{
+  width: 50%;
+  height: 800px;
+  border: 2px solid black;
+  float: left;
+}
+.items{
+  width: 65%;
+  height: 800px;
+  border: 2px solid black;
+  float: left;
+}
+.itemsList{
+  list-style: none;
+  width:100%;
+  text-align: center;
+}
+.specs{
+  border: 1px solid black;
+  float: left;
+  width: 48%;
+  margin: 1%;
+}
+.keypad{
+  width: 50%;
+  height: 399px;
+  border: 2px solid black;
+  float: left;
+}
+.display{
+  width: 50%;
+  height: 399px;
+  border: 2px solid black;
+  float: left;
+}
+.bank{
+  float: left;
+}
+.currencyinput {
+    border: 1px inset #ccc;
+}
+.currencyinput input {
+    border: 0;
+}
+.addItems{
+  float: left;
+  width: 35%;
 }

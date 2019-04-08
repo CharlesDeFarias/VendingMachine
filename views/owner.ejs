@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Vending Machine Admin</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <section class="container">
+
+        <section class="items">
+          <h3>Items</h3>
+          <ul class="itemsList">
+          <% for(var i=0; i<items.length; i++) {%>
+            <li class="specs">
+              <p>Name:<span><%= items[i].name %></span></p>
+              <p>Code:<span><%= items[i].code %></span></p>
+              <img src="<%= items[i].pic %>" alt="item image">
+              <p>Stock:<span><%= items[i].stock %></span></p>
+              <p>Price: $<span><%= items[i].price %></span></p>
+              <input type="text" name="newStock" placeholder="Stock to add">
+              <button type="button" name="button" class="stockBtn">Add stock</button>
+            </li>
+          <% } %>
+          </ul>
+        </section>
+
+      <section class="bank">
+        <% for(var j=0; j<bank.length; j++) {%>
+        <p><span>Bank:</span><%=bank[j].profit%></p>
+        <% } %>
+      </section>
+
+      <section class="addItems" >
+        <form id="createItem" action="/items" method="post">
+          <input type="text" placeholder="Item Name" name="name">
+          <input type="text" placeholder="Image Link" name="pic">
+          <input type="text" placeholder="Item Code" name="code">
+          <input type="number" placeholder="stock" name="stock">
+          <span class="currencyinput">$<input type="number" placeholder="price" name="price" step=".01"></span>
+          <button type="submit" name="button">Add Item</button>
+        </form>
+      </section>
+    </section>
+<script src="main.js"></script>
+  </body>
+</html>
