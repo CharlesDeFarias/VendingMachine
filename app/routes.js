@@ -48,6 +48,7 @@ module.exports = function(app, passport, db) {
         upsert: false
       }, (err, result) => {
         if (err) return res.send(err)
+        console.log(result)
         res.send(result)
       })
     })
@@ -59,23 +60,26 @@ module.exports = function(app, passport, db) {
     //   })
     // })
 //Choosing specific item from items collection based on Code
-// app.get('/item', (req, res) => {
-//   db.collection('items').findOne({code: req.body.code}, (err, result) => {
-//     if (err) return console.log(err)
-//     res.render('index.ejs', {
-//     item: result
-//     })
-//   })
-//   console.log(req.body.code)
-// })
+app.put('/item', (req, res) => {
+  db.collection('items').findOneAndUpdate({code: req.body.code}, {
+    $inc: {
+      //have to make sure to add the price of the selected item to the put fetch for updating bank
+      stock: -1
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: false
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
 
 // Bank updating
 app.put('/bank', (req, res) => {
-  db.collection('bank').findOneAndUpdate({name: bank}, {
-    //Make sure to give the bank document a name field
-    $set: {
-      //have to make sure to add the price of the selected item to the put fetch for updating bank
-      bank:req.body.bank + req.body.price
+  db.collection('bank').findOneAndUpdate({}, {
+    $inc: {
+      profit: req.body.price
     }
   }, {
     sort: {_id: -1},

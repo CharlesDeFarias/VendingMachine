@@ -7,31 +7,37 @@
   </head>
   <body>
     <section class="container">
-      <section class="vendor">
         <section class="indexItems">
-          <h3>Items</h3>
           <ul class="options">
           <% for(var i=0; i<items.length; i++) {%>
             <li class="specs">
-              <p><span>Name:</span><%= items[i].name %></p>
-              <p><span>Price:</span>$<%= items[i].price %></p>
+              <h3><%= items[i].name %></h3>
+              <p>$<%= items[i].price %></p>
               <img src="<%= items[i].pic %>" alt="item image">
-              <p><span>Stock:</span><%= items[i].stock %></p>
-              <p><span>Code:</span><%= items[i].code %></p>
+              <p><%= items[i].stock %> left</p>
+              <p><%= items[i].code %></p>
             </li>
           <% } %>
           </ul>
         </section>
 
     <section class="keypad" >
-      <input id="vendNum" type="text" name="code" value="" placeholder="Code of Item you want">
-      <button id="clickMe" type="button" name="button">Submit Choice</button>
+      <input id="vendNum" type="text" name="code" value="" placeholder="Type in or click code of item you want">
+      <section class="numPad">
+        <button id="clickMe" type="button" class="num clickable" name="button">Submit Choice</button>
+        <button type="button" class="num clickable">1000</button>
+        <button type="button" class="num clickable">6666</button>
+        <button type="button" class="num clickable">9000</button>
+        <button type="button" class="num clickable">2121</button>
+        <button type="button" class="num clickable">1984</button>
+    </section>
     </section>
 
       <section class="display" >
-        <img src="" alt="item image">
+        <h3 id="dispName"></h3>
+        <img id="dispImg" src="" alt="item image">
+        <p id="dispPrice"></p>
       </section>
-    </section>
 
   </section>
   <script src="main.js" charset="utf-8"></script>
